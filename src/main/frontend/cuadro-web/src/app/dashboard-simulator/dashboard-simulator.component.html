@@ -1,0 +1,45 @@
+<form [formGroup]="addressForm" novalidate (ngSubmit)="addressForm.valid && onSubmit()">
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Simulation Information</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="fill">
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" placeholder="Amount" class="input-right-align" formControlName="amount">
+            <span matPrefix>$&nbsp;</span>
+            <span matSuffix>.00</span>
+            <mat-error *ngIf="addressForm.controls['amount'].hasError('required')">
+              Amount is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        <div class="col">
+          <mat-form-field appearance="fill">
+            <mat-label>Duration</mat-label>
+            <input matInput type="number" placeholder="Duration" class="input-right-align" formControlName="duration">
+            <span matSuffix>months</span>
+            <mat-error *ngIf="addressForm.controls['duration'].hasError('required')">
+              Duration is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          </div>
+        <div class="col">
+          <mat-form-field appearance="fill">
+            <mat-label>Interest</mat-label>
+            <input matInput type="number" placeholder="Interest" class="input-right-align" formControlName="interest">
+            <span matSuffix>%</span>
+            <mat-error *ngIf="addressForm.controls['interest'].hasError('required')">
+              Interest is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
