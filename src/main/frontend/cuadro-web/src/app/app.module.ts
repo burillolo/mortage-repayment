@@ -9,7 +9,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { HttpClientModule } from '@angular/common/http';
 import { CuotasServiceService } from './cuotas-service.service';
-import { DashboardSimulatorComponent } from './dashboard-simulator/dashboard-simulator.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
@@ -21,12 +20,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoanSummaryPanelComponent } from './loan-summary-panel/loan-summary-panel.component';
 import { LoanSummaryDialogComponent } from './loan-summary-dialog/loan-summary-dialog.component';
+import { DashboardSimulatorComponent } from './dashboard-simulator/dashboard-simulator.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TablaCuotasComponent,
-    DashboardSimulatorComponent,
     LoanSummaryPanelComponent,
     LoanSummaryDialogComponent
   ],
@@ -45,7 +44,8 @@ import { LoanSummaryDialogComponent } from './loan-summary-dialog/loan-summary-d
     MatCardModule,
     MatIconModule,
     MatSliderModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DashboardSimulatorComponent
   ],
   providers: [CuotasServiceService],
   bootstrap: [AppComponent]

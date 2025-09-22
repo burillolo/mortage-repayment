@@ -1,92 +1,109 @@
 <div class="mortgage-simulator">
   <div class="simulator-panel">
     <div class="panel-header">
-      <h2 class="panel-title">Simulador de Hipoteca</h2>
+      <h2 class="panel-title">🏠 Simulador de Hipoteca</h2>
       <p class="panel-subtitle">Completa los datos para calcular tu préstamo hipotecario</p>
     </div>
     
     <form [formGroup]="addressForm" novalidate (ngSubmit)="addressForm.valid && onSubmit()" class="simulator-form">
       
-      <!-- Housing Type Section -->
-      <div class="form-section">
-        <h3 class="section-title">Tipo de vivienda</h3>
-        <div class="radio-group">
-          <mat-radio-group aria-label="Tipo de vivienda" value="nueva">
-            <mat-radio-button value="nueva" class="radio-option">Obra Nueva</mat-radio-button>
-            <mat-radio-button value="segunda" class="radio-option">Segunda Mano</mat-radio-button>
+      <!-- Housing Type Section - Full Width -->
+      <div class="form-row">
+        <div class="housing-type-section">
+          <h3 class="section-title">Tipo de vivienda</h3>
+          <div class="radio-group">
+           <mat-radio-group aria-label="Tipo de vivienda" value="nueva">
+             <mat-radio-button value="nueva" class="radio-option">Obra Nueva</mat-radio-button>
+             <mat-radio-button value="segunda" class="radio-option">Segunda Mano</mat-radio-button>
           </mat-radio-group>
+          </div>
         </div>
-      </div>
 
-      <!-- Property Price Section -->
-      <div class="form-section">
-        <h3 class="section-title">Precio de la vivienda</h3>
+        <!-- Property Price Section - Full Width -->
+        <div class="price-section">
+          <h3 class="section-title">Precio de la vivienda</h3>
           <div class="price-input-container">
             <mat-form-field appearance="outline" class="price-field">
-              <input matInput id="price-input" type="number" step="10000" placeholder="Introduce el precio de la vivienda" class="price-input" formControlName="amount">
+              <input matInput id="price-input" type="number" step="10000" min="0" placeholder="Introduce el precio de la vivienda" class="price-input" formControlName="amount" (input)="onAmountInput($event)">
               <span matSuffix>€</span>
               <mat-error *ngIf="addressForm.controls['amount'].hasError('required')">
                 El precio es <strong>requerido</strong>
               </mat-error>
+              <mat-error *ngIf="addressForm.controls['amount'].hasError('min')">
+                El precio debe ser <strong>mayor a 0</strong>
+              </mat-error>
             </mat-form-field>
           </div>
+        </div>
+      </div>
 
-          <!-- Financing Percentage Slider -->
-          <div class="financing-slider-container">
-            <h4 class="slider-title">Cantidad financiada</h4>
-            <div class="slider-wrapper">
-              <mat-slider class="financing-slider" 
-                         min="1" 
-                         max="100" 
-                         step="1"
-                         formControlName="financingPercentage">
-                <input matSliderThumb value="80">
-              </mat-slider>
-              <div class="slider-labels">
-                <span class="slider-min">1%</span>
-                <span class="slider-current">{{getFinancingPercentage()}}%</span>
-                <span class="slider-max">100%</span>
-              </div>
+      <!-- Financing Section - Full Width -->
+      <div class="form-row">
+        <!-- Financing Percentage Slider -->
+        <div class="financing-slider-container">
+          <h4 class="slider-title">Cantidad financiada</h4>
+          <div class="slider-wrapper">
+            <mat-slider #slider
+                       class="financing-slider" 
+                       min="1" 
+                       max="100" 
+                       step="1">
+                       <input matSliderThumb
+                       [formControl]="sliderControl">
+            </mat-slider>
+            <div class="slider-labels">
+              <span class="slider-min">1%</span>
+              <span class="slider-current">{{sliderControl.value}}%</span>
+              <span class="slider-max">100%</span>
             </div>
           </div>
-      </div>
-
-      <!-- Financing Amount Section -->
-      <div class="form-section">
-        <h3 class="section-title">Dinero a financiar <mat-icon class="info-icon">info</mat-icon></h3>
-        <div class="financing-info">
-          <div class="financing-amount">{{getFinancingAmount() | currency:'EUR':'symbol':'1.0-0'}} €</div>
-          <div class="financing-percentage">{{getFinancingPercentage()}}% del precio total del inmueble</div>
         </div>
-      </div>
-
-      <!-- Duration Section -->
-      <div class="form-section">
-        <h3 class="section-title">¿En cuánto tiempo quieres devolverlo?</h3>
-        <div class="duration-input-container">
-          <mat-form-field appearance="outline" class="duration-field">
-            <input matInput id="duration-input" type="number" placeholder="Años para devolver el préstamo" class="duration-input" formControlName="duration">
-            <mat-error *ngIf="addressForm.controls['duration'].hasError('required')">
-              La duración es <strong>requerida</strong>
-            </mat-error>
-          </mat-form-field>
-          <div class="duration-info">
-            <span class="duration-range">10 años ────●──── 40 años</span>
+     
+        <div class="financing-amount-container">
+          <h3 class="section-title">Dinero a financiar <mat-icon class="info-icon">info</mat-icon></h3>
+          <div class="financing-info">
+            <div class="financing-amount">{{this.financingAmountValue | currency:'EUR':'symbol':'1.0-0'}}</div>
+            <div class="financing-percentage">{{sliderControl.value}}% del precio total del inmueble</div>
           </div>
         </div>
       </div>
 
-      <!-- Interest Rate Section -->
-      <div class="form-section">
-        <h3 class="section-title">Tasa de interés</h3>
-        <div class="interest-input-container">
-          <mat-form-field appearance="outline" class="interest-field">
-            <input matInput id="interest-input" name="interest-input" type="number" step="0.01" placeholder="Introduce la tasa de interés anual" class="interest-input" formControlName="interest">
-            <span matSuffix>%</span>
-            <mat-error *ngIf="addressForm.controls['interest'].hasError('required')">
-              La tasa de interés es <strong>requerida</strong>
-            </mat-error>
-          </mat-form-field>
+      <!-- Duration and Interest Rate in a Row -->
+      <div class="form-row">
+        <!-- Duration Section -->
+        <div class="duration-slider-container">
+          <h4 class="slider-title">Duración del préstamo</h4>
+          <div class="slider-wrapper">
+            <mat-slider #durationSlider
+                        class="duration-slider" 
+                        min="10" 
+                        max="40" 
+                        step="1" >
+                        <input matSliderThumb [formControl]="durationControl">
+            </mat-slider>
+            <div class="slider-labels">
+              <span class="slider-min">10 años</span>
+              <span class="slider-current">{{durationControl.value}} años</span>
+              <span class="slider-max">40 años</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interest Rate Section -->
+        <div class="interest-rate-container">
+          <h3 class="section-title">Tasa de interés</h3>
+          <div class="interest-input-container">
+            <mat-form-field appearance="outline" class="interest-field">
+              <input matInput id="interest-input" name="interest-input" type="number" step="0.01" min="0" placeholder="Introduce la tasa de interés anual" class="interest-input" formControlName="interest" (input)="onInterestInput($event)">
+              <span matSuffix>%</span>
+              <mat-error *ngIf="addressForm.controls['interest'].hasError('required')">
+                La tasa de interés es <strong>requerida</strong>
+              </mat-error>
+              <mat-error *ngIf="addressForm.controls['interest'].hasError('min')">
+                La tasa de interés debe ser <strong>mayor a 0</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
         </div>
       </div>
 

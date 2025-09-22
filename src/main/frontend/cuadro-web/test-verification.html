@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mortgage Calculator - Test Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-item {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 4px solid #ddd;
+            background: #f9f9f9;
+        }
+        .test-item.pass {
+            border-left-color: #4CAF50;
+            background: #e8f5e8;
+        }
+        .test-item.fail {
+            border-left-color: #f44336;
+            background: #ffeaea;
+        }
+        .test-item.info {
+            border-left-color: #2196F3;
+            background: #e3f2fd;
+        }
+        .button {
+            background: #2196F3;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .button:hover {
+            background: #1976D2;
+        }
+        .calculation-test {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .calculation-test input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .result {
+            font-weight: bold;
+            color: #2196F3;
+        }
+    </style>
+</head>
+<body>
+    <h1>🏠 Mortgage Calculator - Test Verification</h1>
+    
+    <div class="test-section">
+        <h2>📋 Manual Test Checklist</h2>
+        
+        <div class="test-item info">
+            <strong>Prerequisites:</strong>
+            <ul>
+                <li>Start the Angular app: <code>npm start</code></li>
+                <li>Open <a href="http://localhost:4200" target="_blank">http://localhost:4200</a></li>
+                <li>Ensure the dashboard simulator is visible</li>
+            </ul>
+        </div>
+        
+        <h3>Form Elements Test</h3>
+        <div class="test-item" id="test-amount-input">
+            <strong>✓ Amount Input Field:</strong> Present and functional
+        </div>
+        <div class="test-item" id="test-duration-input">
+            <strong>✓ Duration Input Field:</strong> Present and functional
+        </div>
+        <div class="test-item" id="test-interest-input">
+            <strong>✓ Interest Rate Input Field:</strong> Present and functional
+        </div>
+        <div class="test-item" id="test-slider">
+            <strong>✓ Financing Percentage Slider:</strong> Present and functional
+        </div>
+        <div class="test-item" id="test-calculate-button">
+            <strong>✓ Calculate Button:</strong> Present and functional
+        </div>
+        
+        <h3>Slider Functionality Test</h3>
+        <div class="test-item" id="test-slider-default">
+            <strong>✓ Default Slider Value:</strong> Should show 80%
+        </div>
+        <div class="test-item" id="test-slider-movement">
+            <strong>✓ Slider Movement:</strong> Should update percentage display in real-time
+        </div>
+        <div class="test-item" id="test-slider-boundaries">
+            <strong>✓ Slider Boundaries:</strong> Should work from 1% to 100%
+        </div>
+        
+        <h3>Financial Calculation Test</h3>
+        <div class="test-item" id="test-initial-calculation">
+            <strong>✓ Initial Calculation:</strong> Should show correct financing amount
+        </div>
+        <div class="test-item" id="test-amount-change">
+            <strong>✓ Amount Change:</strong> Should update financing amount when property price changes
+        </div>
+        <div class="test-item" id="test-percentage-change">
+            <strong>✓ Percentage Change:</strong> Should update financing amount when slider changes
+        </div>
+        
+        <h3>Real-time Updates Test</h3>
+        <div class="test-item" id="test-realtime-updates">
+            <strong>✓ Real-time Updates:</strong> Changes should be reflected immediately
+        </div>
+        <div class="test-item" id="test-calculation-accuracy">
+            <strong>✓ Calculation Accuracy:</strong> Verify calculations are mathematically correct
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>🧮 Calculation Verification Tool</h2>
+        <p>Use this tool to verify that the calculations in the app match expected results:</p>
+        
+        <div class="calculation-test">
+            <div>
+                <label>Property Amount (€):</label>
+                <input type="number" id="property-amount" value="200000" placeholder="200000">
+            </div>
+            <div>
+                <label>Financing Percentage (%):</label>
+                <input type="number" id="financing-percentage" value="80" min="1" max="100" placeholder="80">
+            </div>
+            <div>
+                <label>Expected Financing Amount:</label>
+                <div class="result" id="expected-amount">€160,000</div>
+            </div>
+        </div>
+        
+        <button class="button" onclick="calculateExpected()">Calculate Expected Amount</button>
+        <button class="button" onclick="testCalculation()">Test This Calculation in App</button>
+        
+        <div id="test-results"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>📊 Test Scenarios</h2>
+        
+        <h3>Scenario 1: Basic Calculation</h3>
+        <div class="test-item info">
+            <strong>Steps:</strong>
+            <ol>
+                <li>Set property amount to €200,000</li>
+                <li>Set financing percentage to 80%</li>
+                <li>Verify financing amount shows €160,000</li>
+            </ol>
+        </div>
+        
+        <h3>Scenario 2: Slider Movement</h3>
+        <div class="test-item info">
+            <strong>Steps:</strong>
+            <ol>
+                <li>Set property amount to €300,000</li>
+                <li>Move slider to 75%</li>
+                <li>Verify financing amount shows €225,000</li>
+                <li>Move slider to 90%</li>
+                <li>Verify financing amount shows €270,000</li>
+            </ol>
+        </div>
+        
+        <h3>Scenario 3: Boundary Testing</h3>
+        <div class="test-item info">
+            <strong>Steps:</strong>
+            <ol>
+                <li>Set property amount to €100,000</li>
+                <li>Move slider to 1% (minimum)</li>
+                <li>Verify financing amount shows €1,000</li>
+                <li>Move slider to 100% (maximum)</li>
+                <li>Verify financing amount shows €100,000</li>
+            </ol>
+        </div>
+        
+        <h3>Scenario 4: Real-time Updates</h3>
+        <div class="test-item info">
+            <strong>Steps:</strong>
+            <ol>
+                <li>Set property amount to €250,000</li>
+                <li>Set financing percentage to 80%</li>
+                <li>Change property amount to €500,000</li>
+                <li>Verify financing amount updates to €400,000 immediately</li>
+                <li>Change percentage to 60%</li>
+                <li>Verify financing amount updates to €300,000 immediately</li>
+            </ol>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>✅ Test Completion</h2>
+        <p>Mark each test as completed by clicking the checkboxes below:</p>
+        
+        <div class="test-item">
+            <input type="checkbox" id="test-1"> <label for="test-1">All form elements are present and functional</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="test-2"> <label for="test-2">Slider shows correct default value (80%)</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="test-3"> <label for="test-3">Slider updates percentage display in real-time</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="test-4"> <label for="test-4">Financing amount updates when property price changes</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="test-5"> <label for="test-5">Financing amount updates when percentage changes</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="test-6"> <label for="test-6">Calculations are mathematically accurate</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="test-7"> <label for="test-7">Slider works at boundary values (1% and 100%)</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="test-8"> <label for="test-8">Calculate button triggers form submission</label>
+        </div>
+        
+        <button class="button" onclick="generateReport()">Generate Test Report</button>
+    </div>
+
+    <script>
+        function calculateExpected() {
+            const amount = parseFloat(document.getElementById('property-amount').value) || 0;
+            const percentage = parseFloat(document.getElementById('financing-percentage').value) || 0;
+            const expected = (amount * percentage / 100).toLocaleString('en-US');
+            document.getElementById('expected-amount').textContent = `€${expected}`;
+        }
+        
+        function testCalculation() {
+            const amount = document.getElementById('property-amount').value;
+            const percentage = document.getElementById('financing-percentage').value;
+            const expected = document.getElementById('expected-amount').textContent;
+            
+            const results = document.getElementById('test-results');
+            results.innerHTML = `
+                <div class="test-item info">
+                    <strong>Test This Calculation:</strong><br>
+                    1. Set property amount to €${parseInt(amount).toLocaleString()}<br>
+                    2. Set financing percentage to ${percentage}%<br>
+                    3. Verify financing amount shows ${expected}<br>
+                    <button class="button" onclick="window.open('http://localhost:4200', '_blank')">Open App in New Tab</button>
+                </div>
+            `;
+        }
+        
+        function generateReport() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const passed = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const total = checkboxes.length;
+            
+            const report = `
+                <div class="test-item ${passed === total ? 'pass' : 'fail'}">
+                    <strong>Test Report:</strong><br>
+                    Passed: ${passed}/${total} tests<br>
+                    Status: ${passed === total ? '✅ ALL TESTS PASSED' : '❌ SOME TESTS FAILED'}<br>
+                    <small>Generated on ${new Date().toLocaleString()}</small>
+                </div>
+            `;
+            
+            document.getElementById('test-results').innerHTML = report;
+        }
+        
+        // Auto-calculate on input change
+        document.getElementById('property-amount').addEventListener('input', calculateExpected);
+        document.getElementById('financing-percentage').addEventListener('input', calculateExpected);
+        
+        // Initial calculation
+        calculateExpected();
+    </script>
+</body>
+</html>
