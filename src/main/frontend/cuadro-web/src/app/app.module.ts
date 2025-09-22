@@ -15,14 +15,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSliderModule } from '@angular/material/slider';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoanSummaryPanelComponent } from './loan-summary-panel/loan-summary-panel.component';
+import { LoanSummaryDialogComponent } from './loan-summary-dialog/loan-summary-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TablaCuotasComponent,
-    DashboardSimulatorComponent
+    DashboardSimulatorComponent,
+    LoanSummaryPanelComponent,
+    LoanSummaryDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +43,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSelectModule,
     MatRadioModule,
     MatCardModule,
+    MatIconModule,
+    MatSliderModule,
     ReactiveFormsModule
   ],
   providers: [CuotasServiceService],

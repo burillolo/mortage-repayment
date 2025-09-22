@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CuotasServiceService } from './cuotas-service.service';
 import { Settings } from './settings';
 
 @Component({
@@ -9,11 +8,17 @@ import { Settings } from './settings';
 })
 export class AppComponent {
   title = 'cuadro-web';
-  constructor(private serverService: CuotasServiceService) {}
+  showTable = false; // Control table visibility
+  currentLoanData: Settings | null = null; // Store loan data
+  
+  constructor() {}
 
   callServer(settingRequest: Settings) {
-    this.serverService.isLoading.next(true);
-    this.serverService.obtenerPeriodosCuotas(settingRequest.nominal, settingRequest.rate, settingRequest.duration);
+    this.currentLoanData = settingRequest; // Store the loan data
+    this.showTable = true; // Show table after calculation
   }
 
+  onBackToSimulator(): void {
+    this.showTable = false; // Hide table and show dashboard
+  }
 }

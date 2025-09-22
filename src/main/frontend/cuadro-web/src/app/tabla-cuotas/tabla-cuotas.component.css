@@ -1,13 +1,236 @@
-.full-width-table {
-  width: 100%;
+/* Main Table Container */
+.table-container {
+  height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-direction: column;
+  overflow: hidden; /* Prevent container scrolling */
 }
 
-.example-loading-shade {
+/* Table Panel */
+.table-panel {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 40px); /* Full height minus padding */
+  overflow: hidden; /* Prevent panel scrolling */
+}
+
+/* Panel Header */
+.panel-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.panel-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 8px 0;
+}
+
+.panel-subtitle {
+  font-size: 16px;
+  color: #7f8c8d;
+  margin: 0;
+}
+
+/* Summary Section */
+.summary-section {
+  background: white;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+/* Table Wrapper */
+.table-wrapper {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  flex: 1; /* Take remaining space */
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* Allow flex item to shrink */
+}
+
+/* Table Container Scroll */
+.table-container-scroll {
+  flex: 1;
+  overflow-y: auto; /* Make table body scrollable */
+  max-height: calc(100vh - 400px); /* Adjust based on header, summary, and paginator height */
+  position: relative;
+}
+
+.full-width-table {
   width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.15);
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* Loading Shade */
+.example-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.9);
   z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 12px;
+}
+
+/* Table Headers */
+::ng-deep .mat-header-cell {
+  font-weight: 600;
+  color: #2c3e50;
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #e9ecef;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Table Rows */
+::ng-deep .mat-row {
+  transition: background-color 0.2s ease;
+}
+
+::ng-deep .mat-row:hover {
+  background-color: #f8f9fa;
+}
+
+::ng-deep .mat-cell {
+  color: #495057;
+  border-bottom-color: #e9ecef;
+}
+
+/* Ensure table body can scroll */
+::ng-deep .mat-table {
+  display: block;
+  overflow: hidden;
+}
+
+::ng-deep .mat-header-row {
+  display: flex;
+  min-height: 56px;
+  align-items: center;
+}
+
+::ng-deep .mat-row {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+}
+
+::ng-deep .mat-header-cell,
+::ng-deep .mat-cell {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+/* Paginator Styling */
+::ng-deep .mat-paginator {
+  background: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  border-radius: 0 0 12px 12px;
+}
+
+::ng-deep .mat-paginator-page-size-select {
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  background: white;
+}
+
+/* Action Buttons */
+.table-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.back-button {
+  border-color: #bdc3c7;
+  color: #7f8c8d;
+  border-radius: 25px;
+  padding: 0 20px;
+  height: 45px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #f8f9fa;
+  border-color: #95a5a6;
+}
+
+.summary-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 25px;
+  padding: 0 20px;
+  height: 45px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.summary-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .table-container {
+    padding: 10px;
+  }
+  
+  .table-panel {
+    padding: 24px;
+    margin: 10px;
+    border-radius: 16px;
+  }
+  
+  .panel-title {
+    font-size: 24px;
+  }
+  
+  ::ng-deep .mat-header-cell,
+  ::ng-deep .mat-cell {
+    font-size: 12px;
+    padding: 8px;
+  }
+  
+  .table-actions {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 480px) {
+  .table-panel {
+    padding: 20px;
+  }
+  
+  .panel-title {
+    font-size: 20px;
+  }
 }

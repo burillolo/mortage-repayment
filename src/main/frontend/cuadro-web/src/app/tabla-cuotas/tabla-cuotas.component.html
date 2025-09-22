@@ -1,58 +1,94 @@
-<div class="mat-elevation-z8">
-  <div class="example-loading-shade"
-       *ngIf="isLoadingResults$ | async">
-       <mat-progress-spinner mode="indeterminate" *ngIf="isLoadingResults$ | async"></mat-progress-spinner>
+<div class="table-container">
+  <!-- Table Actions -->
+  <div class="table-actions">
+    <button mat-stroked-button class="back-button" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      Volver al simulador
+    </button>
+    <button mat-raised-button color="primary" class="summary-button" (click)="showSummary()">
+      <mat-icon>info</mat-icon>
+      Ver resumen
+    </button>
   </div>
-  <table mat-table matSort class="full-width-table" aria-label="Elements">
-    <!-- Id Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-      <td mat-cell *matCellDef="let row">{{row.id}}</td>
-    </ng-container>
+  <div class="table-panel">
+    
+    <!-- Summary Panel Above Table -->
+    <div class="summary-section" *ngIf="loanSummary">
+      <app-loan-summary-panel [loanSummary]="loanSummary"></app-loan-summary-panel>
+    </div>
+    
+    <div class="panel-header">
+      <h2 class="panel-title">Tabla de Amortización</h2>
+      <p class="panel-subtitle">Detalle de cuotas del préstamo hipotecario</p>
+    </div>
+    
+    <div class="table-wrapper">
+      <div class="example-loading-shade" *ngIf="isLoadingResults">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </div>
+      
+      <div class="table-container-scroll">
+        <table mat-table [dataSource]="dataSource" matSort class="full-width-table" aria-label="Tabla de Cuotas">
+        <!-- Mes Column -->
+        <ng-container matColumnDef="mes">
+          <th mat-header-cell *matHeaderCellDef>Mes</th>
+          <td mat-cell *matCellDef="let row">{{row.mes}}</td>
+        </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="cuota">
-      <th mat-header-cell *matHeaderCellDef>Cuota</th>
-      <td mat-cell *matCellDef="let row">{{row.cuota | number:'1.2-2'}}</td>
-    </ng-container>
+        <!-- Cuota Column -->
+        <ng-container matColumnDef="cuota">
+          <th mat-header-cell *matHeaderCellDef>Cuota</th>
+          <td mat-cell *matCellDef="let row">{{row.cuota | currency:'EUR':'symbol':'1.2-2'}}</td>
+        </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="fechaPago">
-      <th mat-header-cell *matHeaderCellDef>Pago</th>
-      <td mat-cell *matCellDef="let row">{{row.fechaPago}}</td>
-    </ng-container>
+        <!-- Fecha Pago Column -->
+        <ng-container matColumnDef="fechaPago">
+          <th mat-header-cell *matHeaderCellDef>Fecha Pago</th>
+          <td mat-cell *matCellDef="let row">{{row.fechaPago}}</td>
+        </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="principal">
-      <th mat-header-cell *matHeaderCellDef>Principal</th>
-      <td mat-cell *matCellDef="let row">{{row.principal | number:'1.2-2'}}</td>
-    </ng-container>
+        <!-- Principal Column -->
+        <ng-container matColumnDef="principal">
+          <th mat-header-cell *matHeaderCellDef>Principal</th>
+          <td mat-cell *matCellDef="let row">{{row.principal | currency:'EUR':'symbol':'1.2-2'}}</td>
+        </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="interest">
-      <th mat-header-cell *matHeaderCellDef>Interes</th>
-      <td mat-cell *matCellDef="let row">{{row.interest | number:'1.2-2'}}</td>
-    </ng-container>
+        <!-- Interest Column -->
+        <ng-container matColumnDef="interest">
+          <th mat-header-cell *matHeaderCellDef>Intereses</th>
+          <td mat-cell *matCellDef="let row">{{row.interest | currency:'EUR':'symbol':'1.2-2'}}</td>
+        </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="restante">
-      <th mat-header-cell *matHeaderCellDef>Restante</th>
-      <td mat-cell *matCellDef="let row">{{row.restante}}</td>
-    </ng-container>
+        <!-- Restante Column -->
+        <ng-container matColumnDef="restante">
+          <th mat-header-cell *matHeaderCellDef>Cuotas Restantes</th>
+          <td mat-cell *matCellDef="let row">{{row.restante}}</td>
+        </ng-container>
 
-    <ng-container matColumnDef="capitalPendiente">
-      <th mat-header-cell *matHeaderCellDef>Capital pendiente</th>
-      <td mat-cell *matCellDef="let row">{{row.capitalPendiente | number:'1.2-2'}}</td>
-    </ng-container>
+        <!-- Capital Pendiente Column -->
+        <ng-container matColumnDef="capitalPendiente">
+          <th mat-header-cell *matHeaderCellDef>Capital Pendiente</th>
+          <td mat-cell *matCellDef="let row">{{row.capitalPendiente | currency:'EUR':'symbol':'1.2-2'}}</td>
+        </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
 
-  <mat-paginator #paginator
-      [length]="dataSource?.data.length"
-      [pageIndex]="0"
-      [pageSize]="50"
-      [pageSizeOptions]="[25, 50, 100, 250]">
-  </mat-paginator>
+      <mat-paginator #paginator
+          [length]="totalData"
+          [pageSizeOptions]="pageSizes"
+          showFirstLastButtons>
+      </mat-paginator>
+    </div>
+
+  </div>
 </div>
+
+<!-- Summary Dialog -->
+<app-loan-summary-dialog 
+  [loanSummary]="loanSummary" 
+  [showDialog]="showSummaryPanel"
+  (closeDialog)="closeSummary()">
+</app-loan-summary-dialog>

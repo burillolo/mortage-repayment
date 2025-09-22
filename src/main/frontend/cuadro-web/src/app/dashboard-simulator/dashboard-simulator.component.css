@@ -1,30 +1,302 @@
-.full-width {
+/* Main Container */
+.mortgage-simulator {
+  height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden; /* Prevent page scrolling */
+}
+
+/* Simulator Panel */
+.simulator-panel {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  width: 100%;
+  max-height: calc(100vh - 40px); /* Full height minus padding */
+  overflow-y: auto; /* Allow scrolling if content exceeds height */
+}
+
+/* Panel Header */
+.panel-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.panel-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 8px 0;
+}
+
+.panel-subtitle {
+  font-size: 16px;
+  color: #7f8c8d;
+  margin: 0;
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: 32px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-icon {
+  font-size: 18px;
+  color: #3498db;
+  cursor: pointer;
+}
+
+/* Radio Group */
+.radio-group {
+  display: flex;
+  gap: 24px;
+}
+
+.radio-option {
+  font-size: 14px;
+}
+
+/* Input Fields */
+.price-field,
+.duration-field,
+.interest-field {
   width: 100%;
 }
 
-.shipping-card {
-  min-width: 120px;
-  margin: 20px auto;
-}
-
-.mat-radio-button {
-  display: block;
-  margin: 5px 0;
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-}
-
-.col {
-  flex: 1;
-  margin-right: 20px;
-}
-
-.col:last-child {
-  margin-right: 0;
-}
-.input-right-align {
+.price-input,
+.duration-input,
+.interest-input {
+  font-size: 18px;
+  font-weight: 600;
   text-align: right;
+}
+
+.price-input-container,
+.duration-input-container,
+.interest-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Financing Slider */
+.financing-slider-container {
+  margin-top: 24px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+}
+
+.slider-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #495057;
+  margin: 0 0 16px 0;
+}
+
+.slider-wrapper {
+  width: 100%;
+}
+
+.financing-slider {
+  width: 100%;
+  margin: 8px 0;
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.slider-current {
+  font-weight: 600;
+  color: #3498db;
+  background: #e3f2fd;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+/* Financing Info */
+.financing-info {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border-left: 4px solid #3498db;
+}
+
+.financing-amount {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 4px;
+}
+
+.financing-percentage {
+  font-size: 14px;
+  color: #7f8c8d;
+}
+
+/* Duration Info */
+.duration-info {
+  margin-top: 8px;
+}
+
+.duration-range {
+  font-size: 12px;
+  color: #95a5a6;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid #ecf0f1;
+}
+
+.share-button {
+  color: #3498db;
+  font-size: 14px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 16px;
+}
+
+.back-button {
+  border-color: #bdc3c7;
+  color: #7f8c8d;
+  border-radius: 25px;
+  padding: 0 20px;
+  height: 45px;
+  font-weight: 500;
+}
+
+.submit-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 25px;
+  padding: 0 30px;
+  height: 45px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+/* Material Form Field Overrides */
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  border-radius: 12px;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  border-width: 2px;
+}
+
+::ng-deep .mat-radio-button .mat-radio-outer-circle {
+  border-color: #3498db;
+}
+
+::ng-deep .mat-radio-button.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #3498db;
+}
+
+::ng-deep .mat-radio-button.mat-radio-checked .mat-radio-inner-circle {
+  background-color: #3498db;
+}
+
+/* Material Slider Overrides */
+::ng-deep .mat-slider-track-fill {
+  background-color: #3498db;
+}
+
+::ng-deep .mat-slider-thumb {
+  background-color: #3498db;
+  border: 2px solid #3498db;
+}
+
+::ng-deep .mat-slider-thumb-label {
+  background-color: #3498db;
+}
+
+::ng-deep .mat-slider-thumb-label-text {
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .simulator-panel {
+    padding: 24px;
+    margin: 10px;
+    border-radius: 16px;
+  }
+  
+  .panel-title {
+    font-size: 24px;
+  }
+  
+  .radio-group {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  
+  .action-buttons {
+    justify-content: space-between;
+  }
+  
+  .back-button,
+  .submit-button {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .mortgage-simulator {
+    padding: 10px;
+  }
+  
+  .simulator-panel {
+    padding: 20px;
+  }
+  
+  .panel-title {
+    font-size: 20px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
 }

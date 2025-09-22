@@ -1,0 +1,71 @@
+<div class="summary-overlay" *ngIf="showDialog" (click)="onCloseDialog()">
+  <div class="summary-dialog" (click)="$event.stopPropagation()">
+    <div class="dialog-header">
+      <h2 class="dialog-title">Detalle de gastos aproximado</h2>
+      <button class="close-button" (click)="onCloseDialog()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    
+    <div class="dialog-content">
+      <!-- Asociados a la compraventa -->
+      <div class="expense-section">
+        <h3 class="section-title">Asociados a la compraventa</h3>
+        <div class="expense-item">
+          <div class="expense-icon itp-icon">
+            <mat-icon>account_balance</mat-icon>
+          </div>
+          <div class="expense-details">
+            <span class="expense-label">ITP</span>
+            <span class="expense-amount">123 €</span>
+          </div>
+        </div>
+        
+        <div class="expense-item">
+          <div class="expense-icon notary-icon">
+            <mat-icon>gavel</mat-icon>
+          </div>
+          <div class="expense-details">
+            <span class="expense-label">Notaría</span>
+            <span class="expense-amount">814 €</span>
+          </div>
+        </div>
+        
+        <div class="expense-item">
+          <div class="expense-icon registry-icon">
+            <mat-icon>business</mat-icon>
+          </div>
+          <div class="expense-details">
+            <span class="expense-label">Registro</span>
+            <span class="expense-amount">426 €</span>
+          </div>
+        </div>
+        
+        <div class="expense-item">
+          <div class="expense-icon management-icon">
+            <mat-icon>settings</mat-icon>
+          </div>
+          <div class="expense-details">
+            <span class="expense-label">Gestoría</span>
+            <span class="expense-amount">374 €</span>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Asociados a la hipoteca -->
+      <div class="expense-section">
+        <h3 class="section-title">Asociados a la hipoteca</h3>
+        <div class="expense-item special-item">
+          <div class="expense-icon appraisal-icon">
+            <mat-icon>home</mat-icon>
+          </div>
+          <div class="expense-details">
+            <span class="expense-label">Tasación</span>
+            <span class="expense-amount">299 €</span>
+          </div>
+        </div>
+      </div>
+      <app-loan-summary-panel [loanSummary]="loanSummary"></app-loan-summary-panel>
+    </div>
+  </div>
+</div>
