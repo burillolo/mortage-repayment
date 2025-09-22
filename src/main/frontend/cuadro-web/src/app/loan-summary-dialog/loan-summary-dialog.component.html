@@ -6,7 +6,7 @@
         <mat-icon>close</mat-icon>
       </button>
     </div>
-    
+
     <div class="dialog-content">
       <!-- Asociados a la compraventa -->
       <div class="expense-section">
@@ -17,10 +17,10 @@
           </div>
           <div class="expense-details">
             <span class="expense-label">ITP</span>
-            <span class="expense-amount">123 €</span>
+            <span class="expense-amount">{{loanSummary?.taxAmount}} €</span>
           </div>
         </div>
-        
+
         <div class="expense-item">
           <div class="expense-icon notary-icon">
             <mat-icon>gavel</mat-icon>
@@ -30,7 +30,7 @@
             <span class="expense-amount">814 €</span>
           </div>
         </div>
-        
+
         <div class="expense-item">
           <div class="expense-icon registry-icon">
             <mat-icon>business</mat-icon>
@@ -40,7 +40,7 @@
             <span class="expense-amount">426 €</span>
           </div>
         </div>
-        
+
         <div class="expense-item">
           <div class="expense-icon management-icon">
             <mat-icon>settings</mat-icon>
@@ -51,7 +51,7 @@
           </div>
         </div>
       </div>
-    
+
       <!-- Asociados a la hipoteca -->
       <div class="expense-section">
         <h3 class="section-title">Asociados a la hipoteca</h3>

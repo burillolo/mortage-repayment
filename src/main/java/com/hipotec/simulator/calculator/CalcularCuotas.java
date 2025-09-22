@@ -1,5 +1,6 @@
 package com.hipotec.simulator.calculator;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -11,14 +12,14 @@ import com.hipotec.simulator.Period;
 
 /**
  * Write a description of class CalcularCuotas here.
- * 
- * @author (your name) 
+ *
+ * @author (your name)
  * @version (a version number or a date)
  */
 public class CalcularCuotas
 {
     private static final Logger log = LoggerFactory.getLogger(CalcularCuotas.class);
-    
+
     // instance variables - replace the example below with your own
     private double principal;
     private double tipo;
@@ -38,13 +39,13 @@ public class CalcularCuotas
         this.cuota = Double.MAX_VALUE;
         this.diferencial = diferencial;
     }
-    
+
     public List<Period> getCuotasPeriodos() {
         calcularCuota(principal, duracion);
         log.debug("Cabeceras de tabla: Cuota\tPrincipal\tIntereses\tPendiente\tRestantes");
         return printPeriodos(duracion, principal);
     }
-    
+
     private List<Period> printPeriodos(int numCuotas, double capitalPendiente) {
         if (numCuotas < 0 || numCuotas > duracion || numCuotas > 1000) {
             throw new IllegalArgumentException("El número de cuotas debe ser menor o igual a la duración del préstamo");
@@ -54,12 +55,13 @@ public class CalcularCuotas
         String formato = "%d\t%.2f\t%.2f\t%.2f\t%.2f\t%d";
         Period currentPeriod;
         List<Period> periodsList;
+        LocalDate fecha = LocalDate.now().plusMonths(duracion - numCuotas);
         if (numCuotas == 0) {
             double ultimaCuota = (1+(tipo / 100 / 12)) * capitalPendiente;
             double intereses = capitalPendiente*(tipo / 100 / 12);
             periodsList = new ArrayList<>();
             int periodo = periodsList.size()+1;
-            currentPeriod = new Period(periodo, ultimaCuota, intereses, 0.0, 0.0);
+            currentPeriod = new Period(periodo, fecha, ultimaCuota, intereses, 0.0, 0.0);
             periodsList.add(currentPeriod);
             log.debug("Período final: {}", String.format(formato, periodo, ultimaCuota, capitalPendiente, intereses, 0.0, 0));
         }
@@ -69,20 +71,20 @@ public class CalcularCuotas
             //amortizaTiempo(5, 8000.0);
             periodsList = printPeriodos(numCuotas, capitalPendiente);
             int periodo = periodsList.size()+1;
-            currentPeriod = new Period(periodo, cuotaIntereses.getCuotaPrincipal(), cuotaIntereses.getCuotaIntereses(), numCuotas, capitalPendiente);
+            currentPeriod = new Period(periodo, fecha, cuotaIntereses.getCuotaPrincipal(), cuotaIntereses.getCuotaIntereses(), numCuotas, capitalPendiente);
             log.debug("Período {}: {}", periodo, String.format(formato, periodo, cuota, cuotaIntereses.getCuotaPrincipal(), cuotaIntereses.getCuotaIntereses(), capitalPendiente, numCuotas));
             periodsList.add(0, currentPeriod);
         }
         return periodsList;
     }
-    
+
     private CuotaIntereses calcularPrincipalIntereses(double principal) {
         double tipoEfectivoMensual = tipo / 100 / 12;
         double cuotaPrincipal = cuota - (tipoEfectivoMensual * principal);
         double cuotaIntereses = tipoEfectivoMensual * principal;
         return new CuotaIntereses(cuotaPrincipal, cuotaIntereses);
     }
-    
+
     private void calcularCuota(double capital, int numCuotas) {
         double tipoEfectivoMensual = tipo / 100 / 12;
         double numerador = capital * tipoEfectivoMensual;
@@ -97,7 +99,7 @@ public class CalcularCuotas
         this.capitalPendiente = this.capitalPendiente - amortizacion;
         calcularCuota();
     }
-    
+
     private void amortizaTiempo(int periodo, double amortizacion) {
         if (this.periodo != periodo || cuota == Double.MAX_VALUE) return;
         this.capitalPendiente = this.capitalPendiente - amortizacion;

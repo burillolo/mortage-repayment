@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource} from '@angular/material/table';
@@ -8,6 +8,7 @@ import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { PageResponse } from '../page-response';
 import { Settings } from '../settings';
 import { LoanSummary } from '../loan-summary';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-tabla-cuotas',
@@ -19,13 +20,15 @@ export class TablaCuotasComponent implements AfterViewInit, OnInit, OnChanges {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['mes', 'cuota', 'fechaPago', 'principal', 'interest', 'restante', 'capitalPendiente'];
 
-  @Input() loanData: Settings | null = null;
-  @Output() backToSimulator = new EventEmitter<void>();
-
+  loanData: Settings | null = null;
   loanSummary: LoanSummary | null = null;
   showSummaryPanel = false;
 
-  constructor(private cuotasService: CuotasServiceService) {}
+  constructor(
+    private cuotasService: CuotasServiceService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   totalData: number = 0;
   EmpData!: Period[];
@@ -94,7 +97,25 @@ export class TablaCuotasComponent implements AfterViewInit, OnInit, OnChanges {
       });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Read parameters from route query params
+    this.route.queryParams.subscribe(params => {
+      const nominal = parseFloat(params['nominal']);
+      const rate = parseFloat(params['rate']);
+      const duration = parseInt(params['duration']);
+      
+      if (nominal && rate && duration) {
+        this.loanData = {
+          nominal: nominal,
+          rate: rate,
+          duration: duration
+        };
+        
+        this.loadLoanData(nominal, rate, duration);
+        this.loadLoanSummary(nominal, rate, duration);
+      }
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['loanData'] && this.loanData) {
@@ -124,7 +145,7 @@ export class TablaCuotasComponent implements AfterViewInit, OnInit, OnChanges {
   }
 
   goBack(): void {
-    this.backToSimulator.emit();
+    this.router.navigate(['/']);
   }
 
   loadLoanSummary(nominal: number, interest: number, months: number): void {

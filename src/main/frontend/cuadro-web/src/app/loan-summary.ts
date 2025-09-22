@@ -6,4 +6,5 @@ export interface LoanSummary {
   totalInterest: number;
   totalCost: number;
   durationMonths: number;
+  taxAmount: number;
 }

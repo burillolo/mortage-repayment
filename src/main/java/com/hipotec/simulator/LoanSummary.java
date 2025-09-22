@@ -8,11 +8,12 @@ public class LoanSummary {
     private double totalInterest;
     private double totalCost;
     private int durationMonths;
-    
+    private double taxAmount;
+
     public LoanSummary() {}
-    
-    public LoanSummary(double totalAmount, double loanAmount, double interestRate, 
-                      double monthlyPayment, double totalInterest, double totalCost, int durationMonths) {
+
+    public LoanSummary(double totalAmount, double loanAmount, double interestRate,
+                      double monthlyPayment, double totalInterest, double totalCost, int durationMonths, double taxAmount) {
         this.totalAmount = totalAmount;
         this.loanAmount = loanAmount;
         this.interestRate = interestRate;
@@ -20,27 +21,32 @@ public class LoanSummary {
         this.totalInterest = totalInterest;
         this.totalCost = totalCost;
         this.durationMonths = durationMonths;
+        this.taxAmount = taxAmount;
     }
-    
+
     // Getters and Setters
     public double getTotalAmount() { return totalAmount; }
     public void setTotalAmount(double totalAmount) { this.totalAmount = totalAmount; }
-    
+
     public double getLoanAmount() { return loanAmount; }
     public void setLoanAmount(double loanAmount) { this.loanAmount = loanAmount; }
-    
+
     public double getInterestRate() { return interestRate; }
     public void setInterestRate(double interestRate) { this.interestRate = interestRate; }
-    
+
     public double getMonthlyPayment() { return monthlyPayment; }
     public void setMonthlyPayment(double monthlyPayment) { this.monthlyPayment = monthlyPayment; }
-    
+
     public double getTotalInterest() { return totalInterest; }
     public void setTotalInterest(double totalInterest) { this.totalInterest = totalInterest; }
-    
+
     public double getTotalCost() { return totalCost; }
     public void setTotalCost(double totalCost) { this.totalCost = totalCost; }
-    
+
     public int getDurationMonths() { return durationMonths; }
     public void setDurationMonths(int durationMonths) { this.durationMonths = durationMonths; }
+
+    public double getTaxAmount() { return taxAmount; }
+    public void setTaxAmount(double taxAmount) { this.taxAmount = taxAmount; }
+
 }

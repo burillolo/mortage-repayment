@@ -13,9 +13,9 @@ export class CuotasServiceService {
 
   private periodsSubject = new BehaviorSubject<Period[]>([]);
   private pageInfoSubject = new BehaviorSubject<{totalElements: number, totalPages: number, pageNumber: number, pageSize: number}>({
-    totalElements: 0, 
-    totalPages: 0, 
-    pageNumber: 0, 
+    totalElements: 0,
+    totalPages: 0,
+    pageNumber: 0,
     pageSize: 20
   });
   periodos$: Observable<Period[]> = this.periodsSubject.asObservable();
@@ -26,7 +26,7 @@ export class CuotasServiceService {
 
   obtenerPeriodosCuotas(nominal: number, interest: number, months: number, page: number = 0, size: number = 20): Observable<PageResponse<Period>> {
     this.isLoading.next(true);
-    return this.httpClient.get<PageResponse<Period>>('/api', {
+    return this.httpClient.get<PageResponse<Period>>('/api/periods', {
         params: new HttpParams()
             .set('principal', nominal.toString())
             .set('interest', interest.toString())
@@ -41,7 +41,7 @@ export class CuotasServiceService {
           cuota: period.principal + period.interest,
           mes: (page * size) + index + 1
         }));
-        
+
         // Update subjects with new data
         this.periodsSubject.next(pageContent);
         this.pageInfoSubject.next({
@@ -51,7 +51,7 @@ export class CuotasServiceService {
           pageSize: pageResponse.size
         });
         this.isLoading.next(false);
-        
+
         return {
           ...pageResponse,
           content: pageContent
@@ -77,7 +77,7 @@ export class CuotasServiceService {
       params: new HttpParams()
         .set('principal', nominal.toString())
         .set('interest', interest.toString())
-        .set('duration', Math.floor(months / 12).toString())
+        .set('duration', months.toString())
     });
   }
 

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,6 +23,12 @@ import { LoanSummaryPanelComponent } from './loan-summary-panel/loan-summary-pan
 import { LoanSummaryDialogComponent } from './loan-summary-dialog/loan-summary-dialog.component';
 import { DashboardSimulatorComponent } from './dashboard-simulator/dashboard-simulator.component';
 
+const routes: Routes = [
+  { path: '', component: DashboardSimulatorComponent },
+  { path: 'cuotas', component: TablaCuotasComponent },
+  { path: '**', redirectTo: '' }
+];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +39,7 @@ import { DashboardSimulatorComponent } from './dashboard-simulator/dashboard-sim
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    RouterModule.forRoot(routes),
     MatProgressSpinnerModule,
     MatTableModule,
     MatPaginatorModule,

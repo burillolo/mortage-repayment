@@ -1,12 +1,1 @@
-<!-- Dashboard Simulator - Show only when table is hidden -->
-<div *ngIf="!showTable">
-  <app-dashboard-simulator (serverRequest)="callServer($event)"></app-dashboard-simulator>
-</div>
-
-<!-- Table Component - Show only when calculation is complete -->
-<div *ngIf="showTable && currentLoanData">
-  <app-tabla-cuotas 
-    [loanData]="currentLoanData" 
-    (backToSimulator)="onBackToSimulator()">
-  </app-tabla-cuotas>
-</div>
+<router-outlet></router-outlet>
