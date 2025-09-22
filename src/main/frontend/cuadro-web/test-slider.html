@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider Test - Mortgage Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        .test-step {
+            margin: 15px 0;
+            padding: 10px;
+            border-left: 4px solid #2196F3;
+            background: #e3f2fd;
+        }
+        .test-step h4 {
+            margin: 0 0 10px 0;
+            color: #1976D2;
+        }
+        .test-step ol {
+            margin: 10px 0;
+        }
+        .test-step li {
+            margin: 5px 0;
+        }
+        .expected-result {
+            background: #e8f5e8;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        .console-instructions {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 4px solid #FF9800;
+        }
+        .button {
+            background: #2196F3;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .button:hover {
+            background: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎚️ Slider Functionality Test</h1>
+    
+    <div class="test-container">
+        <h2>Test Instructions</h2>
+        <p>Follow these steps to verify the slider is working correctly:</p>
+        
+        <div class="test-step">
+            <h4>Step 1: Open the Application</h4>
+            <ol>
+                <li>Make sure the Angular app is running: <code>npm start</code></li>
+                <li>Open <a href="http://localhost:4200" target="_blank">http://localhost:4200</a></li>
+                <li>Open browser DevTools (F12) and go to Console tab</li>
+            </ol>
+        </div>
+        
+        <div class="test-step">
+            <h4>Step 2: Initial State Check</h4>
+            <ol>
+                <li>Verify the slider thumb is positioned at 80% (not at 1%)</li>
+                <li>Check that the percentage label shows "80%"</li>
+                <li>Set property amount to €200,000</li>
+                <li>Verify financing amount shows €160,000 (80% of €200,000)</li>
+            </ol>
+            <div class="expected-result">
+                <strong>Expected:</strong> Slider at 80%, label shows "80%", financing amount shows "€160,000"
+            </div>
+        </div>
+        
+        <div class="test-step">
+            <h4>Step 3: Slider Movement Test</h4>
+            <ol>
+                <li>Move the slider to 75%</li>
+                <li>Verify the percentage label updates to "75%"</li>
+                <li>Verify financing amount updates to €150,000 (75% of €200,000)</li>
+                <li>Move the slider to 90%</li>
+                <li>Verify the percentage label updates to "90%"</li>
+                <li>Verify financing amount updates to €180,000 (90% of €200,000)</li>
+            </ol>
+            <div class="expected-result">
+                <strong>Expected:</strong> Slider movement updates both percentage label and financing amount in real-time
+            </div>
+        </div>
+        
+        <div class="test-step">
+            <h4>Step 4: Property Amount Change Test</h4>
+            <ol>
+                <li>Keep slider at 80%</li>
+                <li>Change property amount to €300,000</li>
+                <li>Verify financing amount updates to €240,000 (80% of €300,000)</li>
+                <li>Change property amount to €100,000</li>
+                <li>Verify financing amount updates to €80,000 (80% of €100,000)</li>
+            </ol>
+            <div class="expected-result">
+                <strong>Expected:</strong> Property amount changes update financing amount while keeping percentage constant
+            </div>
+        </div>
+        
+        <div class="console-instructions">
+            <h4>🔍 Console Debugging</h4>
+            <p>Watch the browser console for debug messages like:</p>
+            <code>Financing calculation: {amount: 200000, percentage: 80, result: 160000}</code>
+            <p>This confirms the calculation is working correctly.</p>
+        </div>
+    </div>
+    
+    <div class="test-container">
+        <h2>Test Results Checklist</h2>
+        
+        <div class="test-step">
+            <h4>✅ Initial State</h4>
+            <input type="checkbox" id="initial-slider"> <label for="initial-slider">Slider thumb positioned at 80%</label><br>
+            <input type="checkbox" id="initial-label"> <label for="initial-label">Percentage label shows "80%"</label><br>
+            <input type="checkbox" id="initial-calculation"> <label for="initial-calculation">Financing amount shows €160,000 for €200,000 property</label>
+        </div>
+        
+        <div class="test-step">
+            <h4>✅ Slider Movement</h4>
+            <input type="checkbox" id="slider-75"> <label for="slider-75">Moving to 75% updates label and amount to €150,000</label><br>
+            <input type="checkbox" id="slider-90"> <label for="slider-90">Moving to 90% updates label and amount to €180,000</label><br>
+            <input type="checkbox" id="slider-realtime"> <label for="slider-realtime">Updates happen in real-time as slider moves</label>
+        </div>
+        
+        <div class="test-step">
+            <h4>✅ Property Amount Changes</h4>
+            <input type="checkbox" id="amount-300k"> <label for="amount-300k">€300,000 property shows €240,000 financing (80%)</label><br>
+            <input type="checkbox" id="amount-100k"> <label for="amount-100k">€100,000 property shows €80,000 financing (80%)</label><br>
+            <input type="checkbox" id="amount-realtime"> <label for="amount-realtime">Amount changes update financing immediately</label>
+        </div>
+        
+        <div class="test-step">
+            <h4>✅ Console Debugging</h4>
+            <input type="checkbox" id="console-messages"> <label for="console-messages">Console shows calculation debug messages</label><br>
+            <input type="checkbox" id="console-correct"> <label for="console-correct">Console values match displayed values</label>
+        </div>
+        
+        <button class="button" onclick="generateTestReport()">Generate Test Report</button>
+    </div>
+    
+    <div class="test-container">
+        <h2>Common Issues & Solutions</h2>
+        
+        <div class="test-step">
+            <h4>❌ Slider thumb at 1% but label shows 80%</h4>
+            <p><strong>Solution:</strong> This indicates a form control synchronization issue. The slider visual position doesn't match the form control value.</p>
+        </div>
+        
+        <div class="test-step">
+            <h4>❌ Moving slider doesn't update label</h4>
+            <p><strong>Solution:</strong> The slider events aren't properly connected to the form control. Check that formControlName is correctly set.</p>
+        </div>
+        
+        <div class="test-step">
+            <h4>❌ Financing amount doesn't update</h4>
+            <p><strong>Solution:</strong> The getter methods aren't being called on change detection. Check that the template is using the correct method calls.</p>
+        </div>
+        
+        <div class="test-step">
+            <h4>❌ Console shows wrong values</h4>
+            <p><strong>Solution:</strong> There might be a timing issue with form control updates. Check that the form is properly initialized.</p>
+        </div>
+    </div>
+
+    <script>
+        function generateTestReport() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const total = checkboxes.length;
+            
+            const report = `
+                <div class="test-container">
+                    <h3>📊 Test Report</h3>
+                    <p><strong>Tests Passed:</strong> ${checked}/${total}</p>
+                    <p><strong>Status:</strong> ${checked === total ? '✅ ALL TESTS PASSED' : '❌ SOME TESTS FAILED'}</p>
+                    <p><strong>Generated:</strong> ${new Date().toLocaleString()}</p>
+                    ${checked < total ? '<p><strong>Note:</strong> Please review failed tests and check the common issues section.</p>' : ''}
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', report);
+        }
+    </script>
+</body>
+</html>

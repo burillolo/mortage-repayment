@@ -1,13 +1,30 @@
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/e2e",
     "module": "commonjs",
-    "target": "es5",
+    "target": "es2018",
+    "moduleResolution": "node",
     "types": [
       "jasmine",
-      "jasminewd2",
-      "node"
+      "node",
+      "protractor"
+    ],
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": "./",
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "useDefineForClassFields": false,
+    "lib": [
+      "es2018",
+      "dom"
     ]
   }
 }

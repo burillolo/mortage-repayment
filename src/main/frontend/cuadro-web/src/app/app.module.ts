@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,24 +10,36 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { HttpClientModule } from '@angular/common/http';
 import { CuotasServiceService } from './cuotas-service.service';
-import { DashboardSimulatorComponent } from './dashboard-simulator/dashboard-simulator.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSliderModule } from '@angular/material/slider';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoanSummaryPanelComponent } from './loan-summary-panel/loan-summary-panel.component';
+import { LoanSummaryDialogComponent } from './loan-summary-dialog/loan-summary-dialog.component';
+import { DashboardSimulatorComponent } from './dashboard-simulator/dashboard-simulator.component';
+
+const routes: Routes = [
+  { path: '', component: DashboardSimulatorComponent },
+  { path: 'cuotas', component: TablaCuotasComponent },
+  { path: '**', redirectTo: '' }
+];
 
 @NgModule({
   declarations: [
     AppComponent,
     TablaCuotasComponent,
-    DashboardSimulatorComponent
+    LoanSummaryPanelComponent,
+    LoanSummaryDialogComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    RouterModule.forRoot(routes),
     MatProgressSpinnerModule,
     MatTableModule,
     MatPaginatorModule,
@@ -37,7 +50,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSelectModule,
     MatRadioModule,
     MatCardModule,
-    ReactiveFormsModule
+    MatIconModule,
+    MatSliderModule,
+    ReactiveFormsModule,
+    DashboardSimulatorComponent
   ],
   providers: [CuotasServiceService],
   bootstrap: [AppComponent]

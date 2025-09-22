@@ -1,30 +1,411 @@
-.full-width {
+/* Main Container */
+.mortgage-simulator {
+  height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-y: auto; /* Allow scrolling if content exceeds height */
+}
+
+/* Simulator Panel */
+.simulator-panel {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  padding: 40px;
   width: 100%;
 }
 
-.shipping-card {
-  min-width: 120px;
-  margin: 20px auto;
+/* Panel Header */
+.panel-header {
+  text-align: center;
+  margin-bottom: 40px;
 }
 
-.mat-radio-button {
-  display: block;
-  margin: 5px 0;
+.panel-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 8px 0;
 }
 
-.row {
+.panel-subtitle {
+  font-size: 16px;
+  color: #7f8c8d;
+  margin: 0;
+}
+
+/* Form Container */
+.simulator-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+/* Form Sections */
+.form-section {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 0; /* Remove bottom margin since we're using gap */
 }
 
-.col {
+/* Responsive Grid Layout for Form Sections */
+.form-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  gap: 32px;
+}
+
+/* Two column layout for larger screens */
+@media (min-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Three column layout for very large screens */
+@media (min-width: 1024px) {
+  .form-row {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+/* Special handling for specific sections */
+.form-section.full-width {
+  grid-column: 1 / -1; /* Span all columns */
+}
+
+.form-section.half-width {
+  grid-column: span 1;
+}
+
+/* Ensure certain sections always take full width */
+.housing-type-section,
+.price-section,
+.financing-section,
+.duration-slider-container,
+.interest-rate-container,
+.financing-slider-container,
+.financing-amount-container {
   flex: 1;
-  margin-right: 20px;
 }
 
-.col:last-child {
-  margin-right: 0;
+.financing-amount-container {
+  align-items: start;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
-.input-right-align {
+
+/* Form row specific styling */
+.form-row .form-section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Ensure equal height for form sections in the same row */
+.form-row {
+  align-items: stretch;
+}
+
+/* Better spacing for form sections */
+.form-row .form-section .section-title {
+  margin-bottom: 12px;
+}
+
+/* Input field adjustments for side-by-side layout */
+.form-row .mat-form-field {
+  width: 100%;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-icon {
+  font-size: 18px;
+  color: #3498db;
+  cursor: pointer;
+}
+
+/* Radio Group */
+.radio-group {
+  display: flex;
+  gap: 24px;
+}
+
+.radio-option {
+  font-size: 14px;
+}
+
+/* Input Fields */
+.price-field,
+.duration-field,
+.interest-field {
+  width: 100%;
+}
+
+.price-input,
+.duration-input,
+.interest-input {
+  font-size: 18px;
+  font-weight: 600;
   text-align: right;
+}
+
+.price-input-container,
+.duration-input-container,
+.interest-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Financing Slider */
+.financing-slider-container {
+  margin-top: 24px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+}
+
+/* Duration Slider */
+.duration-slider-container {
+  margin-top: 24px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+}
+
+.slider-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #495057;
+  margin: 0 0 16px 0;
+}
+
+.slider-wrapper {
+  width: 100%;
+}
+
+.financing-slider,
+.duration-slider {
+  width: 100%;
+  margin: 8px 0;
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.slider-current {
+  font-weight: 600;
+  color: #3498db;
+  background: #e3f2fd;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+/* Financing Info */
+.financing-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: start;
+  justify-content: center;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border-left: 4px solid #3498db;
+  margin-right: 24px;
+}
+
+.financing-amount {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 4px;
+}
+
+.financing-percentage {
+  font-size: 14px;
+  color: #7f8c8d;
+}
+
+/* Duration Info */
+.duration-info {
+  margin-top: 8px;
+}
+
+.duration-range {
+  font-size: 12px;
+  color: #95a5a6;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid #ecf0f1;
+}
+
+.share-button {
+  color: #3498db;
+  font-size: 14px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 16px;
+}
+
+.back-button {
+  border-color: #bdc3c7;
+  color: #7f8c8d;
+  border-radius: 25px;
+  padding: 0 20px;
+  height: 45px;
+  font-weight: 500;
+}
+
+.submit-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 25px;
+  padding: 0 30px;
+  height: 45px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+/* Material Form Field Overrides */
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  border-radius: 12px;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  border-width: 2px;
+}
+
+::ng-deep .mat-radio-button .mat-radio-outer-circle {
+  border-color: #3498db;
+}
+
+::ng-deep .mat-radio-button.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #3498db;
+}
+
+::ng-deep .mat-radio-button.mat-radio-checked .mat-radio-inner-circle {
+  background-color: #3498db;
+}
+
+/* Material Slider Overrides */
+::ng-deep .mat-slider-track-fill {
+  background-color: #3498db;
+}
+
+::ng-deep .mat-slider-thumb {
+  background-color: #3498db;
+  border: 2px solid #3498db;
+}
+
+::ng-deep .mat-slider-thumb-label {
+  background-color: #3498db;
+}
+
+::ng-deep .mat-slider-thumb-label-text {
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 1023px) {
+  .form-row {
+    grid-template-columns: 1fr; /* Stack on tablets and below */
+  }
+}
+
+@media (max-width: 768px) {
+  .simulator-panel {
+    padding: 24px;
+    margin: 10px;
+    border-radius: 16px;
+  }
+  
+  .panel-title {
+    font-size: 24px;
+  }
+  
+  .radio-group {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  
+  .action-buttons {
+    justify-content: space-between;
+  }
+  
+  .back-button,
+  .submit-button {
+    flex: 1;
+  }
+  
+  /* Ensure form sections stack properly on mobile */
+  .form-section {
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mortgage-simulator {
+    padding: 10px;
+  }
+  
+  .simulator-panel {
+    padding: 20px;
+  }
+  
+  .panel-title {
+    font-size: 20px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
 }

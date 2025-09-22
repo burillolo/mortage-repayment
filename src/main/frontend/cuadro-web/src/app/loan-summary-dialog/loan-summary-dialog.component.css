@@ -1,0 +1,210 @@
+/* Overlay */
+.summary-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+/* Dialog */
+.summary-dialog {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Header */
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 16px 24px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.dialog-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.close-button:hover {
+  background-color: #f8f9fa;
+}
+
+.close-button mat-icon {
+  color: #6c757d;
+  font-size: 20px;
+}
+
+/* Content */
+.dialog-content {
+  padding: 24px;
+}
+
+/* Expense Sections */
+.expense-section {
+  margin-bottom: 32px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #dc3545;
+  margin: 0 0 16px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #dc3545;
+}
+
+/* Expense Items */
+.expense-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.expense-item:last-child {
+  border-bottom: none;
+}
+
+.expense-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  flex-shrink: 0;
+}
+
+.expense-icon mat-icon {
+  color: white;
+  font-size: 20px;
+}
+
+.itp-icon {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+}
+
+.notary-icon {
+  background: linear-gradient(135deg, #4ecdc4, #44a08d);
+}
+
+.registry-icon {
+  background: linear-gradient(135deg, #45b7d1, #96c93d);
+}
+
+.management-icon {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+}
+
+.appraisal-icon {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+}
+
+.special-item {
+  background: #e3f2fd;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 8px 0;
+  border: 2px solid #2196f3;
+}
+
+.expense-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+}
+
+.expense-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.expense-amount {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .summary-dialog {
+    width: 95%;
+    max-height: 90vh;
+  }
+  
+  .dialog-header {
+    padding: 20px 20px 16px 20px;
+  }
+  
+  .dialog-content {
+    padding: 20px;
+  }
+  
+  .expense-item {
+    padding: 10px 0;
+  }
+  
+  .expense-icon {
+    width: 36px;
+    height: 36px;
+    margin-right: 12px;
+  }
+  
+  .expense-icon mat-icon {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dialog-title {
+    font-size: 18px;
+  }
+  
+  .expense-label,
+  .expense-amount {
+    font-size: 14px;
+  }
+}

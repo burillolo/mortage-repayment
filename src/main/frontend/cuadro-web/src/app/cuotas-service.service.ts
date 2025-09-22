@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import { Observable, Subscriber, Observer, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Period } from './period';
+import { PageResponse } from './page-response';
+import { LoanSummary } from './loan-summary';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -9,37 +11,74 @@ import { map } from 'rxjs/operators';
 })
 export class CuotasServiceService {
 
-  periodSubscriber: Subscriber<Period[]>;
-  periodos$: Observable<Period[]>;
-  isLoading = new BehaviorSubject(false);
+  private periodsSubject = new BehaviorSubject<Period[]>([]);
+  private pageInfoSubject = new BehaviorSubject<{totalElements: number, totalPages: number, pageNumber: number, pageSize: number}>({
+    totalElements: 0,
+    totalPages: 0,
+    pageNumber: 0,
+    pageSize: 20
+  });
+  periodos$: Observable<Period[]> = this.periodsSubject.asObservable();
+  pageInfo$: Observable<{totalElements: number, totalPages: number, pageNumber: number, pageSize: number}> = this.pageInfoSubject.asObservable();
+  isLoading = new BehaviorSubject<boolean>(false);
 
-  constructor(private httpClient: HttpClient) {
-    this.periodSubscriber = new Subscriber();
-    this.periodos$ = new Observable(e => {
-      this.periodSubscriber = e;
-    });
-  }
+  constructor(private httpClient: HttpClient) {}
 
-  obtenerPeriodosCuotas(nominal: number, interest: number, months: number): void {
-    (this.httpClient.get<Period[]>('/api', {
+  obtenerPeriodosCuotas(nominal: number, interest: number, months: number, page: number = 0, size: number = 20): Observable<PageResponse<Period>> {
+    this.isLoading.next(true);
+    return this.httpClient.get<PageResponse<Period>>('/api/periods', {
         params: new HttpParams()
             .set('principal', nominal.toString())
             .set('interest', interest.toString())
             .set('duration', months.toString())
-    })).pipe(
-      map(periodo => {periodo.forEach(a => a.cuota = a.principal + a.interest); return periodo; })
-    ).subscribe((a) => {
-      this.periodSubscriber.next(a);
-      this.isLoading.next(false);
-    });
+            .set('page', page.toString())
+            .set('size', size.toString())
+    }).pipe(
+      map(pageResponse => {
+        // Add calculated cuota field to each period
+        const pageContent = pageResponse.content.map((period: Period, index: number) => ({
+          ...period,
+          cuota: period.principal + period.interest,
+          mes: (page * size) + index + 1
+        }));
+
+        // Update subjects with new data
+        this.periodsSubject.next(pageContent);
+        this.pageInfoSubject.next({
+          totalElements: pageResponse.totalElements,
+          totalPages: pageResponse.totalPages,
+          pageNumber: pageResponse.number,
+          pageSize: pageResponse.size
+        });
+        this.isLoading.next(false);
+
+        return {
+          ...pageResponse,
+          content: pageContent
+        };
+      })
+    );
   }
 
   getPeriodsDataSource(): Observable<Period[]> {
     return this.periodos$;
   }
 
+  getPageInfo(): Observable<{totalElements: number, totalPages: number, pageNumber: number, pageSize: number}> {
+    return this.pageInfo$;
+  }
+
   getIsLoadingResult(): Observable<boolean> {
     return this.isLoading;
+  }
+
+  getLoanSummary(nominal: number, interest: number, months: number): Observable<LoanSummary> {
+    return this.httpClient.get<LoanSummary>('/api/summary', {
+      params: new HttpParams()
+        .set('principal', nominal.toString())
+        .set('interest', interest.toString())
+        .set('duration', months.toString())
+    });
   }
 
 }

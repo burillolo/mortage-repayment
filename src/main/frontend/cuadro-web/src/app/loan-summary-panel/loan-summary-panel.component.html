@@ -1,0 +1,33 @@
+<div class="summary-content" *ngIf="loanSummary">
+
+  <!-- Resumen del préstamo -->
+  <div class="loan-summary-section">
+    <h3 class="section-title">Resumen del préstamo</h3>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <span class="summary-label">Importe del préstamo</span>
+        <span class="summary-value">{{loanSummary.loanAmount | currency:'EUR':'symbol':'1.0-0'}}</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-label">Tipo de interés</span>
+        <span class="summary-value">{{loanSummary.interestRate}} %</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-label">Cuota mensual</span>
+        <span class="summary-value highlight">{{loanSummary.monthlyPayment | currency:'EUR':'symbol':'1.0-0'}}</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-label">Intereses totales</span>
+        <span class="summary-value">{{loanSummary.totalInterest | currency:'EUR':'symbol':'1.0-0'}}</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-label">Coste total</span>
+        <span class="summary-value highlight">{{loanSummary.totalCost | currency:'EUR':'symbol':'1.0-0'}}</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-label">Duración</span>
+        <span class="summary-value">{{loanSummary.durationMonths / 12}} años</span>
+      </div>
+    </div>
+  </div>
+</div>

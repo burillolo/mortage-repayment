@@ -16,9 +16,12 @@
             "outputPath": "../../resources/public",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "aot": true,
+            "sourceMap": true,
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -40,7 +43,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -57,13 +59,21 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "development": {
+              "sourceMap": true,
+              "optimization": false,
+              "namedChunks": true,
+              "extractLicenses": false,
+              "vendorChunk": true,
+              "buildOptimizer": false
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "cuadro-web:build"
+            "browserTarget": "cuadro-web:build:development"
           },
           "configurations": {
             "production": {
@@ -81,7 +91,9 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
@@ -123,5 +135,8 @@
       }
     }
   },
-  "defaultProject": "cuadro-web"
+  "defaultProject": "cuadro-web",
+  "cli": {
+    "analytics": "4152cf06-68ba-4bc7-9c8a-895e8ccf39d0"
+  }
 }
